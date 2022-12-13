@@ -16,16 +16,19 @@ const CardItem = () => {
     const urlStr = `https://api.unsplash.com/search/photos?query=${searchStr}&per_page=20&client_id=${client_id}`;
 
     useEffect(() => {
-       const getCards = async () => {
-            try {
-                let response = await axios.get(`${urlStr}`);
-                // let response = await axios.get(`https://api.unsplash.com/search/photos?query=coffee&per_page=20&client_id=9WZGfUCuR_LYgjZ-8CQJjk2AE0akdVou0MfHW1_jrn4`);
-                setPics(response.data.results); // results []
-            }catch (error) {
-                console.log(error.message);
-            }
-        };
-        getCards();
+      //  const getCards = async () => {
+      //       try {
+      //           let response = await axios.get(`${urlStr}`);
+      //           // let response = await axios.get(`https://api.unsplash.com/search/photos?query=coffee&per_page=20&client_id=9WZGfUCuR_LYgjZ-8CQJjk2AE0akdVou0MfHW1_jrn4`);
+      //           setPics(response.data.results); // results []
+      //       }catch (error) {
+      //           console.log(error.message);
+      //       }
+      //   };
+      //   getCards();
+      fetch("/api/unsplash")
+      .then((res) => res.json())
+      .then((data) => console.log(data.data))
     }, []); 
 
     // const url = results[i].urls.thumb;

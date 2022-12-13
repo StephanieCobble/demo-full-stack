@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const { DestinationRouter } = require("./routes");
 const db = require("./db");
+const axios = require('axios');
 
 // render server side template
 app.set("view engine", "ejs");
@@ -35,6 +36,24 @@ app.get("/", (req, res) => {
     })
     .catch((err) => res.render("Yo an errror occured", err));
 });
+
+app.get("/api/unsplash", (req, res) => {
+  const client_id = "9WZGfUCuR_LYgjZ-8CQJjk2AE0akdVou0MfHW1_jrn4"; // Create an account unsplash tp hey client ID (access key);
+  const searchStr = "coffee";
+  const urlStr = `https://api.unsplash.com/search/photos?query=${searchStr}&per_page=20&client_id=${client_id}`;
+  
+  const getCards = async () => {
+    try {
+        let response = await axios.get(`${urlStr}`);
+        // let response = await axios.get(`https://api.unsplash.com/search/photos?query=coffee&per_page=20&client_id=9WZGfUCuR_LYgjZ-8CQJjk2AE0akdVou0MfHW1_jrn4`);
+        setPics(response.data.results); // results []
+    }catch (error) {
+        console.log(error.message);
+    }
+};
+  
+  return getCards(); //return some data
+})
 
 app.use("/api", DestinationRouter);
 
