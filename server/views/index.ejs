@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid text-center py-5">
+          <h1>Vacations Destination Wish List</h1>
+          <p>Found exciting places to visition on your next vacation? Use the form below to add them to your wishlist</p>
+        </div>
+      </div>
+  </header>
+  <main>
+  </head>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <form id="destination-form" name="destinationForm">
+            <div class="form-group">
+              <label for="name">Destination Name</label>
+              <input type="input" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter the name of the destination" value="">
+            </div>
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input type="input" class="form-control" id="location" aria-describedby="emailHelp" placeholder="Where is it located?">
+            </div>
+            <div class="form-group">
+              <label for="imageUrl">Photo</label>
+              <input type="input" class="form-control" id="imageUrl" aria-describedby="emailHelp" placeholder="Enter an image url of the place">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="input" class="form-control" id="description" aria-describedby="emailHelp" placeholder="Enter a description">
+            </div>
+            <button type="submit" class="btn btn-primary" id="create-button">Add to list</button>
+          </form>
+        </div>
+        <div class="col-md-9">
+            <h4 id="title">Enter destination details</h4>
+            <div class="d-flex" id="destinations_container">
+                <% for(var i = 0; i < destinations.length; i++) {%>
+                    <div class="card" style="width: 15rem; height: fit-content;">
+                        <img style="height: 250px;"class="card-img-top" alt="<%= destinations[i].title %>" src="<%= destinations[i].imageUrl %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= destinations[i].title %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><%= destinations[i].location %></h6>
+                            <p class="card-text"><%= destinations[i].description %></p>
+                            <div class="buttons_container">
+                              
+                                <button data-bs-toggle="modal" data-bs-target="#<%= destinations[i].updateModalId  %>" class="btn btn-warning">Update</button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%= destinations[i].deleteModalId  %>">
+                                Delete
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade"id="<%= destinations[i].deleteModalId %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you would like to delete?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <!-- <div class="modal-body">
+                                     
+                                      </div> -->
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button data-id="<%= destinations[i]._id %>" type="button" class="btn btn-primary delete">Delete</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div><!-- Button trigger modal -->
+
+                                <!-- Modal -->
+                                <div class="modal fade" data-id="<%= destinations[i]._id %>" id="<%= destinations[i].updateModalId %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Update</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form id="updateForm">
+                                        <div class="form-group">
+                                          <label for="title">Title</label>
+                                          <input type="text" class="form-control update-title" aria-describedby="title" placeholder="">
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="location">Location</label>
+                                          <input type="text" class="form-control update-location" aria-describedby="location" placeholder="">
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="description">Description</label>
+                                          <textarea type="text" class="form-control update-description" aria-describedby="description" placeholder=""></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="imageUrl">Image Url</label>
+                                          <input type="text" class="form-control update-imageUrl" aria-describedby="imageUrl" placeholder="">
+                                        </div>
+                                      </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                      <button data-id="<%= destinations[i]._id %>" data-entity-index="<%= destinations[i].entityIndex %>" type="button" class="btn btn-primary update">Save</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div><!-- Button trigger modal -->
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script src="/main.js"></script>
+</body>
+
+</html>
